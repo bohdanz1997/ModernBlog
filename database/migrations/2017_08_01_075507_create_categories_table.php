@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNationTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateNationTable extends Migration
      */
     public function up()
     {
-        Schema::create('nations', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->text('description');
         });
     }
 
@@ -26,6 +27,6 @@ class CreateNationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nations');
+        Schema::dropIfExists('posts');
     }
 }
