@@ -16,7 +16,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(20);
 
         return view('categories.index', compact(
             'categories'
@@ -89,7 +89,7 @@ class CategoriesController extends Controller
 
         return redirect()->route('categories');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
