@@ -5,34 +5,34 @@ namespace App\Helpers;
 use Illuminate\Http\UploadedFile;
 use File;
 
-class ImageUpload
+class FileUpload
 {
     public $file;
 
-    public function uploadFile(UploadedFile $file, $currentImage)
+    public function uploadFile(UploadedFile $file, $currentFile)
     {
         $this->file = $file;
 
-        $this->deleteCurrentImage($currentImage);
+        $this->deleteCurrentFile($currentFile);
 
-        return $this->saveImage();
+        return $this->saveFile();
     }
 
-    public function deleteCurrentImage($currentImage)
+    public function deleteCurrentFile($currentFile)
     {
-        if ($this->fileExists($currentImage)) {
-            File::delete($this->getFolder() . $currentImage);
+        if ($this->fileExists($currentFile)) {
+            File::delete($this->getFolder() . $currentFile);
         }
     }
 
-    public function fileExists($currentImage)
+    public function fileExists($currentFile)
     {
-        if (!empty($currentImage)) {
-            return File::exists($this->getFolder() . $currentImage);
+        if (!empty($currentFile)) {
+            return File::exists($this->getFolder() . $currentFile);
         }
     }
 
-    public function saveImage()
+    public function saveFile()
     {
         $fileName = $this->generateFileName();
 

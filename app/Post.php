@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Helpers\FileUpload;
 
 class Post extends Model
 {
@@ -16,5 +17,22 @@ class Post extends Model
     public function comments()
     {
         return $this->hasMany('App\Comment');
+    }
+
+    public function uploadFileAndSave($file, $currentFile = '')
+    {
+        $fileUploadModel = new FileUpload;
+
+        $fileName = $fileUploadModel->uploadFile($file, $currentFile);
+
+        $this->file = $fileName;
+
+        return $this->save();
+    }
+
+    public function deleteFile()
+    {
+        $fileUploadModel = new FileUpload;
+        $fileUploadModel->deleteCurrentFile($this->file);
     }
 }
