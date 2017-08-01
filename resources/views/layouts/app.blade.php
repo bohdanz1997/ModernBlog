@@ -12,6 +12,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        ul li {
+            list-style-type: none;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

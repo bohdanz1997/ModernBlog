@@ -30,7 +30,12 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $selectedCategory = 0;
+        $categories = Category::pluck('name', 'id');
+
+        return view('posts.create', compact(
+            'selectedCategory', 'categories'
+        ));
     }
 
     /**
@@ -39,13 +44,14 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(PostRequest $request)
     {
         $requestData = $request->all();
 
         $post = Post::create($requestData);
+        $post->uploadFileAndSave($request->file('file'));
 
-        return redirect()->route('posts');
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -69,8 +75,11 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
+        $selectedCategory = $post->category_id;
+        $categories = Category::pluck('name', 'id');
+
         return view('posts.edit', compact(
-            'post'
+            'post', 'selectedCategory', 'categories'
         ));
     }
 
@@ -86,8 +95,9 @@ class PostsController extends Controller
         $requestData = $request->all();
 
         $post->update($requestData);
+        $post->uploadFileAndSave($request->file('file'), $post->file);
 
-        return redirect()->route('posts');
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -100,6 +110,6 @@ class PostsController extends Controller
     {
         Post::destroy($id);
 
-        return redirect()->route('posts');
+        return redirect()->route('posts.index');
     }
 }

@@ -39,18 +39,17 @@
                                         Edit
                                     </button>
                                 </a>
-                                {!! Form::open([
-                                    'method'=>'DELETE',
-                                    'route' => ['categories.destroy', $item],
-                                    'style' => 'display:inline'
-                                ]) !!}
-                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [
-                                        'type' => 'submit',
-                                        'class' => 'btn btn-danger',
-                                        'title' => 'Delete Category',
-                                        'onclick'=>'return confirm("Confirm delete?")'
-                                ]) !!}
-                                {!! Form::close() !!}
+                                <form
+                                    action="{{ route('categories.destroy', $item) }}"
+                                    style="display:inline"
+                                    method="POST"
+                                    enctype="multipart/form-data" class="form-horizontal">
+                                    <input name="_method" type="hidden" value="DELETE">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger" title="Delete Category" onclick="return confirm('Confirm delete?')">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

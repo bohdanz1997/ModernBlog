@@ -7,7 +7,7 @@ use App\Helpers\FileUpload;
 
 class Post extends Model
 {
-    protected $fillable = ['name', 'content', 'file', 'category_id'];
+    protected $fillable = ['name', 'content', 'category_id'];
 
     public function category()
     {
@@ -30,9 +30,19 @@ class Post extends Model
         return $this->save();
     }
 
+    public function getFile()
+    {
+        return '/uploads//' . $this->file;
+    }
+
     public function deleteFile()
     {
         $fileUploadModel = new FileUpload;
         $fileUploadModel->deleteCurrentFile($this->file);
+    }
+
+    public function getDate()
+    {
+        return $this->created_at->toFormattedDateString();
     }
 }

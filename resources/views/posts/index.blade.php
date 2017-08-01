@@ -5,7 +5,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">Posts</div>
     <div class="panel-body">
-        <a href="{{ route('categories.create') }}" class="btn btn-success" title="Add New">
+        <a href="{{ route('posts.create') }}" class="btn btn-success" title="Add New">
             <i class="fa fa-plus" aria-hidden="true"></i> Add New
         </a>
         <br/>
@@ -16,8 +16,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Content</th>
                         <th>Category</th>
+                        <th>Content</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -26,8 +26,8 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ str_limit($item->content, 50) }}</td>
                             <td>{{ $item->category->name }}</td>
+                            <td>{{ str_limit($item->content, 80) }}</td>
                             <td>
                                 <a href="{{ route('posts.show', $item) }}" title="View Post">
                                     <button class="btn btn-info">
@@ -41,18 +41,17 @@
                                         Edit
                                     </button>
                                 </a>
-                                {!! Form::open([
-                                    'method'=>'DELETE',
-                                    'route' => ['posts.destroy', $item],
-                                    'style' => 'display:inline'
-                                ]) !!}
-                                {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', [
-                                        'type' => 'submit',
-                                        'class' => 'btn btn-danger',
-                                        'title' => 'Delete Post',
-                                        'onclick'=>'return confirm("Confirm delete?")'
-                                ]) !!}
-                                {!! Form::close() !!}
+                                <form
+                                    action="{{ route('posts.destroy', $item) }}"
+                                    style="display:inline"
+                                    method="POST"
+                                    enctype="multipart/form-data" class="form-horizontal">
+                                    <input name="_method" type="hidden" value="DELETE">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger" title="Delete Post" onclick="return confirm('Confirm delete?')">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>Delete
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -60,7 +59,6 @@
             </table>
             <div class="pagination-wrapper"> {!! $posts->appends(['search' => Request::get('search')])->render() !!} </div>
         </div>
-
     </div>
 </div>
 
