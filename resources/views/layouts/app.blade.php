@@ -17,6 +17,10 @@
         ul li {
             list-style-type: none;
         }
+
+        .no-display {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -60,5 +64,6 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

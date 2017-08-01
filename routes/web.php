@@ -15,3 +15,5 @@ Auth::routes();
 
 Route::resource('posts', 'PostsController');
 Route::resource('categories', 'CategoriesController');
+
+Route::post('comments/store', 'CommentsController@store')->name('comments.store');
