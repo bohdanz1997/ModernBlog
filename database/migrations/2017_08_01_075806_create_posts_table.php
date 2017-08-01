@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('content');
-            $table->string('file')->default(null);
+            $table->string('file')->nullable();
 
             $table->integer('category_id')->unsigned();
             $table->foreign('category_id')
